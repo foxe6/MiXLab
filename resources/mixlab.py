@@ -636,7 +636,7 @@ class PortForward:
         port=con["port"]
         proto=con["proto"]
         if v:
-          clear_output()
+          #clear_output()
           loadingAn(name="lds")
           textAn("Preparing argo tunnel...", ty="twg")
         data = dict(url="https://"+ArgoTunnel(port, proto, closePort(self.config[1])).keep_alive())
