@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import goog.colab
 import goog.colab.server
 import goog.colab.utils
