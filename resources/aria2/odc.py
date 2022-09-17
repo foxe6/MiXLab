@@ -11,6 +11,7 @@ import functools
 import sys
 import megauploader
 import pickle
+import shutil
 import os
 import requests
 import traceback
@@ -165,11 +166,14 @@ def upload(root, path):
             files.append([root, path])
         for a, d in files:
             log("uploading", a, d)
-            mm.upload(a, d)
+            mm.upload(a, d, parallel_upload=True, parallel_threads=32)
             log("uploaded", a, d)
         public_url = mm.export("/{}".format(path.split("/")[0]))
         log("public_url", public_url)
-        shutil.rmtree(os.path.join(root, path))
+        if os.path.isdir(os.path.join(root, path)):
+            shutil.rmtree(os.path.join(root, path))
+        else:
+            os.remove(os.path.join(root, path))
         return public_url
     except Exception as e:
         return e
