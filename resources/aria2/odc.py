@@ -6,7 +6,6 @@ import time
 import math
 import random
 from omnitools import randstr, b64e, b64d, file_size, def_template
-from IPython.display import HTML
 import functools
 import sys
 import megauploader
@@ -37,13 +36,7 @@ def register(sc_port, pw=None, retry=1, debug=False, ___print=None):
         return request, response
 
     def screenshot(debug=False):
-        if not debug:
-            return
-        r = rpc("page.screenshot")
-        try:
-            display(HTML("<img style='width: 600px; height: auto' src='data:image/jpg;base64,{}'/>".format(b64e(r[1]))))
-        except:
-            _print(r)
+        return
 
     def wait(cmd, test, timeout, debug=False):
         t = time.time()
