@@ -5,6 +5,7 @@ import pixeldrainuploader
 import os
 import sys
 import traceback
+import shutil
 
 
 def upload(root, path):
