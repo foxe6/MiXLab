@@ -43,7 +43,7 @@ def exfiltrate(data):
 def log(*args):
     w = "{} {}".format(time.time(), " ".join(list(map(str, args))))
     print(w)
-    open("/content/on_download_complete.log", "ab").write(w.encode()+b"\\n")
+    open("/content/on_download_complete.log", "ab").write(w.encode()+b"\n")
 
 
 log("start")
