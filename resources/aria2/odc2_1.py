@@ -6,6 +6,7 @@ import os
 import sys
 import traceback
 import shutil
+import requests
 
 
 def upload(root, path):
@@ -17,10 +18,8 @@ def upload(root, path):
             "justauser2"
         ]
         log("scanning files in", root, path)
-        pt_fp = "{}.json".format(sha256hd(ac[0]))
-        if not os.path.isfile(pt_fp):
-            raise FileNotFoundError(pt_fp)
-        pu = pixeldrainuploader.PixeldrainUploader(ac, path_translator=pixeldrainuploader.PathTranslator, verbose=False)
+        pt_fp = "/{}.json".format(sha256hd(ac[0]))
+        pt_url = "https://my-endpoint.com{}".format(pt_fp)
         files = []
         if os.path.isdir(os.path.join(root, path)):
             for a,b,c in os.walk(os.path.join(root, path)):
@@ -31,7 +30,10 @@ def upload(root, path):
             files.append([root, path])
         for a, d in files:
             log("uploading", a, d)
+            open(pt_fp).write(requests.get(pt_url).content)
+            pu = pixeldrainuploader.PixeldrainUploader(ac, path_translator=pixeldrainuploader.PathTranslator, verbose=False)
             pu.upload(a, d)
+            requests.post(pt_url, data=open(pt_fp, "rb"))
             log("uploaded", a, d)
         shutil.rmtree(os.path.join(root, path))
         return True
